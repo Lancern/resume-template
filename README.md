@@ -2,6 +2,11 @@
 
 This repository contains a simple resume template written in [typst].
 
+<div style="display:flex;">
+  <img src="figures/cn-example.png" height="300px" style="margin-right:4px;" />
+  <img src="figures/en-example.png" height="300px" />
+</div>
+
 ## Usage and Build
 
 You need to install [typst] before you start.
