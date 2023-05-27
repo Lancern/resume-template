@@ -1,7 +1,10 @@
 // Fonts used for different languages.
 #let lang-fonts = (
   en: (heading: "Linux Libertine", body: "Linux Libertine"),
-  cn: (heading: ("Linux Libertine", "Heiti SC"), body: ("Linux Libertine", "Songti SC")),
+  cn: (
+    heading: ("Heiti SC", "Noto Sans CJK SC"),
+    body: ("Songti SC", "Noto Serif CJK SC")
+  ),
 )
 
 // This function defines the resume template.
