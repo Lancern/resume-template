@@ -1,3 +1,9 @@
+// Fonts used for different languages.
+#let lang-fonts = (
+  en: (heading: "Linux Libertine", body: "Linux Libertine"),
+  cn: (heading: ("Linux Libertine", "Heiti SC"), body: ("Linux Libertine", "Songti SC")),
+)
+
 // This function defines the resume template.
 #let resume(
   name,     // string. Your name.
@@ -7,6 +13,7 @@
   github-id: none,  // string, optional. Your GitHub ID.
   twitter-id: none, // string, optional. Your Twitter ID.
   photo: none,      // content, optional. Your personal photograph.
+  lang: "en",       // string, optional. Language of the resume.
   body,     // content, optional. The main content of the resume.
 ) = {
   // Set the document's basic properties.
@@ -17,10 +24,18 @@
     numbering: "1",
     number-align: center,
   )
-  set text(font: "Linux Libertine", size: 11pt)
+  set text(lang: lang, size: 11pt)
+
+  let lang-fonts-config = lang-fonts.at(lang, default: none)
+  if lang-fonts-config == none {
+    lang-fonts-config = lang-fonts.en
+  }
+
+  set text(font: lang-fonts-config.body)
 
   // Section heading styles.
   show heading: it => block[
+    #set text(font: lang-fonts-config.heading)
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
@@ -44,7 +59,7 @@
     }
 
     // Personal information at the top.
-    block(text(weight: 700, 2em, name))  // Name
+    block(text(font: lang-fonts-config.heading, size: 2em, weight: 700, name))  // Name
     stack(
       spacing: 0.3em,
       stack(
