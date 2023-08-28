@@ -200,19 +200,19 @@
 // Generate a resume item that represents a development project.
 #let develop-item(
   name,     // string. Name of the project.
-  language, // string. Programming language used in the project.
+  languages, // string. Programming languages used in the project.
   role,     // string. Name of your role.
   body: none,   // string, optional. Any additional content associated with the project.
 ) = {
-  let badge-color = github-pl-colors.at(lower(language), default: none)
-
-  let badge = language
-  if badge-color != none {
-    badge = [
-      #box(baseline: 0.2em, circle(height: 1em, fill: badge-color))
-      #language
-    ]
-  }
+  let badge = languages
+    .split(regex(", *"))
+    .map(i => (github-pl-colors.at(lower(i), default: none), i))
+    .filter(i => i.first() != none)
+    .map(i => [
+      #box(baseline: 0.2em, circle(height: 1em, fill: i.first()))
+      #i.last()
+    ])
+    .join()
 
   resume-item(name, badge: badge, subtitle: role, body: body)
 }

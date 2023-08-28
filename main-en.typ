@@ -72,7 +72,7 @@
 = Hobby Projects
 #develop-item(
   "HackerA/ProjectA",
-  "Rust",
+  "Rust, C",
   "Open-Source Contributor",
   body: lorem(40),
 )
