@@ -142,13 +142,7 @@
   }
 
   let duration = start-date + " - " + end-date
-  let subtitle = degree
-  if major != none {
-    subtitle = subtitle + ", " + major
-  }
-  if department != none {
-    subtitle = subtitle + ", " + department
-  }
+  let subtitle = (degree, major, department).filter(i => i != none).join(", ")
 
   if supervisor != none {
     let supervisor-line = block[
@@ -198,10 +192,7 @@
   }
 
   let duration = start-date + " - " + end-date
-  let subtitle = position
-  if group != none {
-    subtitle = subtitle + ", " + group
-  }
+  let subtitle = (position, group).filter(i => i != none).join(", ")
 
   resume-item(organization, badge: duration, subtitle: subtitle, body: body)
 }
