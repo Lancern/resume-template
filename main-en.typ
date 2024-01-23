@@ -6,7 +6,6 @@
   "hacker@hacker.com",
   webpage: "https://hacker.me",
   github-id: "Hacker",
-  photo: image("figures/photo.png"),
 )
 
 = Education

@@ -17,7 +17,6 @@
   webpage: none,    // string, optional. URL to your home page.
   github-id: none,  // string, optional. Your GitHub ID.
   twitter-id: none, // string, optional. Your Twitter ID.
-  photo: none,      // content, optional. Your personal photograph.
   lang: "en",       // string, optional. Language of the resume.
   body,     // content, optional. The main content of the resume.
 ) = {
@@ -25,11 +24,11 @@
   set document(author: name, title: "Resume of " + name)
   set page(
     paper: "a4",
-    margin: (top: 20mm, bottom: 20mm, left: 15mm, right: 15mm),
+    margin: (top: 1.8cm, bottom: 1.8cm, left: 1.5cm, right: 1.5cm),
     numbering: "1",
     number-align: center,
   )
-  set text(lang: lang, size: 11pt)
+  set text(lang: lang, size: 10pt)
 
   let lang-fonts-config = lang-fonts.at(lang, default: none)
   if lang-fonts-config == none {
@@ -44,7 +43,7 @@
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
-      line(length: 80%)
+      line(length: 5cm)
     )
   ]
 
@@ -63,43 +62,40 @@
       }
     }
 
+    let webpage-item = none
+    let github-item = none
+    let twitter-item = none
+    if webpage != none {
+      webpage-item = info-item(webpage, icon: image("figures/web.svg"), url: webpage)
+    }
+    if github-id != none {
+      github-item = info-item(github-id, icon: image("figures/github.svg"), url: "https://github.com/" + github-id)
+    }
+    if (twitter-id != none) {
+      twitter-item = info-item(twitter-id, url: "https://twitter.com/" + twitter-id)
+    }
+
     // Personal information at the top.
-    block(text(font: lang-fonts-config.heading, size: 2em, weight: 700, name))  // Name
-    stack(
-      spacing: 0.3em,
-      stack(
-        dir: ltr,
-        spacing: 2em,
-        info-item(phone, icon: image("figures/phone.svg")),
-        info-item(email, icon: image("figures/email.svg"), url: "mailto:" + email),
-      ),
-      stack(
-        dir: ltr,
-        spacing: 2em,
-        if webpage != none { info-item(webpage, icon: image("figures/web.svg"), url: webpage) },
-        if github-id != none { info-item(github-id, icon: image("figures/github.svg"), url: "https://github.com/" + github-id) },
-        if twitter-id != none { info-item(twitter-id, url: "https://twitter.com/" + twitter-id) },
-      )
+    align(
+      center,
+      [
+        #block(text(font: lang-fonts-config.heading, size: 2em, weight: 700, name))  // Name
+        #stack(
+          dir: ltr,
+          spacing: 1.5em,
+          info-item(phone, icon: image("figures/phone.svg")),
+          info-item(email, icon: image("figures/email.svg"), url: "mailto:" + email),
+          webpage-item,
+          github-item,
+          twitter-item,
+        )
+      ]
     )
   }
 
-  if photo != none {
-    // Measure the height of persona-info-block, which will be the maximum height of the photo.
-    style(sty => {
-      let pib-size = measure(personal-info-block, sty)
-      place(
-        top + right,
-        dy: -15mm,
-        box(height: pib-size.height + 15mm, photo),
-      )
-    })
-  }
-
   personal-info-block
-  v(1.2em)
 
   // Main body.
-  show: columns.with(2, gutter: 1.5em)
   body
 }
 
@@ -111,17 +107,23 @@
   subtitle: none,  // string, optional. The subtitle of the item.
   body: none,   // content, optional. Any additional content associated with this item.
 ) = {
+  let stack-items = (
+    [
+      #text(weight: "bold", title)
+      #h(1em)
+      #text(fill: rgb(140, 140, 140), style: "italic", subtitle)
+      #h(1fr)
+      #text(weight: "bold", badge)
+    ],
+  )
+
+  if body != none {
+    stack-items.push(body)
+  }
+
   stack(
     spacing: 0.6em,
-    block[
-      #set text(weight: "bold")
-      #title #h(1fr) #badge
-    ],
-    block[
-      #set text(fill: rgb(140, 140, 140), style: "italic")
-      #subtitle
-    ],
-    body,
+    ..stack-items
   )
 }
 

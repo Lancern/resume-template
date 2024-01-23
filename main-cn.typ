@@ -6,7 +6,6 @@
   "Huijisuan@hacker.com",
   webpage: "https://huijisuan.me",
   github-id: "Huijisuan",
-  photo: image("figures/photo.png"),
   lang: "cn",
 )
 
