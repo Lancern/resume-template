@@ -9,6 +9,29 @@
   ),
 )
 
+// Set the localization dictionary according to the given language.
+#let _set-locale-dict(lang) = {
+  if lang == "cn" {
+    [
+      #metadata("简历") <locale-dict-resume>
+      #metadata("导师") <locale-dict-supervisor>
+      #metadata("至今") <locale-dict-now>
+    ]
+  } else {
+    [
+      #metadata("Resume") <locale-dict-resume>
+      #metadata("Supervisor") <locale-dict-supervisor>
+      #metadata("Now") <locale-dict-now>
+    ]
+  }
+}
+
+#let _get-locale-keyword(tag) = {
+  locate(loc => {
+    query(tag, loc).first().value
+  })
+}
+
 // This function defines the resume template.
 #let resume(
   name,     // string. Your name.
@@ -21,7 +44,10 @@
   body,     // content, optional. The main content of the resume.
 ) = {
   // Set the document's basic properties.
-  set document(author: name, title: "Resume of " + name)
+  set document(
+    author: name,
+    title: [ #_get-locale-keyword(<locale-dict-resume>) - #name ],
+  )
   set page(
     paper: "a4",
     margin: (top: 1.8cm, bottom: 1.8cm, left: 1.5cm, right: 1.5cm),
@@ -29,6 +55,9 @@
     number-align: center,
   )
   set text(lang: lang, size: 10pt)
+
+  // Set localization dictionary as metadata.
+  _set-locale-dict(lang)
 
   let lang-fonts-config = lang-fonts.at(lang, default: none)
   if lang-fonts-config == none {
@@ -76,20 +105,15 @@
     }
 
     // Personal information at the top.
-    align(
-      center,
-      [
-        #block(text(font: lang-fonts-config.heading, size: 2em, weight: 700, name))  // Name
-        #stack(
-          dir: ltr,
-          spacing: 1.5em,
-          info-item(phone, icon: image("figures/phone.svg")),
-          info-item(email, icon: image("figures/email.svg"), url: "mailto:" + email),
-          webpage-item,
-          github-item,
-          twitter-item,
-        )
-      ]
+    block(text(font: lang-fonts-config.heading, size: 2em, weight: 700, name))  // Name
+    stack(
+      dir: ltr,
+      spacing: 1.5em,
+      info-item(phone, icon: image("figures/phone.svg")),
+      info-item(email, icon: image("figures/email.svg"), url: "mailto:" + email),
+      webpage-item,
+      github-item,
+      twitter-item,
     )
   }
 
@@ -140,16 +164,16 @@
   body: none,        // content, optional. Any additional content included in this item.
 ) = {
   if end-date == none {
-    end-date = "Now"
+    end-date = _get-locale-keyword(<locale-dict-now>)
   }
 
-  let duration = start-date + " - " + end-date
+  let duration = [ #start-date - #end-date ]
   let subtitle = (degree, major, department).filter(i => i != none).join(", ")
 
   if supervisor != none {
     let supervisor-line = block[
       #set text(fill: rgb(140, 140, 140))
-      Supervisor: #supervisor
+      #_get-locale-keyword(<locale-dict-supervisor>): #supervisor
     ]
     if body == none {
       body = supervisor-line
@@ -190,7 +214,7 @@
   body: none,   // string, optional. Any additional content associated with the work experience.
 ) = {
   if end-date == none {
-    end-date = "Now"
+    end-date = _get-locale-keyword(<locale-dict-now>)
   }
 
   let duration = start-date + " - " + end-date
