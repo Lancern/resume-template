@@ -23,7 +23,6 @@ You can import this file into your own typst file to use the template:
   "Your email",
   webpage: "https://your.home.page",
   github-id: "YourGithubId",
-  photo: image("figures/photo.png"),  // Your personal photograph
   lang: "en",
 )
 

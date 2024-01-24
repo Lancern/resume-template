@@ -87,9 +87,3 @@
   "Owner",
   body: lorem(40),
 )
-#develop-item(
-  "HackerD/ProjectD",
-  "Zig",
-  "Open-Source Contributor",
-  body: lorem(40),
-)
