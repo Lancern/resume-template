@@ -4,8 +4,8 @@
 #let lang-fonts = (
   en: (heading: "Linux Libertine", body: "Linux Libertine"),
   cn: (
-    heading: ("Heiti SC", "Noto Sans CJK SC"),
-    body: ("Songti SC", "Noto Serif CJK SC")
+    heading: ("Helvetica", "Heiti SC", "Liberation Serif", "Noto Sans CJK SC"),
+    body: ("Times New Roman", "Songti SC", "Liberation Serif", "Noto Serif CJK SC"),
   ),
 )
 
