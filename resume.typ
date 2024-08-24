@@ -120,12 +120,16 @@
       zhihu-item = info-item(raw(zhihu-id), icon: image("figures/zhihu.svg"), url: "https://www.zhihu.com/people/" + lower(zhihu-id))
     }
 
+    let layout-phone(phone) = {
+      box(phone.split("-").map(raw).join(h(0.25em)))
+    }
+
     // Personal information at the top.
     block(text(font: lang-fonts-config.heading, size: 2em, weight: 700, name))  // Name
     stack(
       dir: ltr,
       spacing: 1.5em,
-      info-item(raw(phone), icon: image("figures/phone.svg")),
+      info-item(layout-phone(phone), icon: image("figures/phone.svg")),
       info-item(raw(email), icon: image("figures/email.svg"), url: "mailto:" + email),
       webpage-item,
       github-item,
