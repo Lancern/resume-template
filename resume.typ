@@ -4,8 +4,8 @@
 #let lang-fonts = (
   en: (heading: "Linux Libertine", body: "Linux Libertine"),
   cn: (
-    heading: ("Helvetica", "Heiti SC", "Liberation Serif", "Noto Sans CJK SC"),
-    body: ("Times New Roman", "Songti SC", "Liberation Serif", "Noto Serif CJK SC"),
+    heading: ("Noto Sans CJK SC", "Heiti SC"),
+    body: ("Noto Serif CJK SC", "Songti SC"),
   ),
 )
 
@@ -40,21 +40,33 @@
   webpage: none,    // string, optional. URL to your home page.
   github-id: none,  // string, optional. Your GitHub ID.
   twitter-id: none, // string, optional. Your Twitter ID.
+  zhihu-id: none,   // string, optional. Your Zhihu ID.
   lang: "en",       // string, optional. Language of the resume.
+  text-size: none,  // length, optional. The text size of 1em.
+  page-margin: none, // dict (top, bottom, left, right), optional. Page margin.
   body,     // content, optional. The main content of the resume.
 ) = {
+  if text-size == none {
+    text-size = 10pt
+  }
+  if page-margin == none {
+    page-margin = (top: 1.2cm, bottom: 1.2cm, left: 1cm, right: 1cm)
+  }
+
   // Set the document's basic properties.
-  set document(
-    author: name,
-    title: [ #_get-locale-keyword(<locale-dict-resume>) - #name ],
-  )
+  set document(author: name, title: "CV - " + name)
   set page(
     paper: "a4",
-    margin: (top: 1.8cm, bottom: 1.8cm, left: 1.5cm, right: 1.5cm),
-    numbering: "1",
-    number-align: center,
+    margin: page-margin,
+    footer: context [
+      #set text(size: 0.95em, fill: rgb(90, 90, 90))
+
+      #datetime.today().display()
+      #h(1fr)
+      #counter(page).display("1 / 1", both: true)
+    ]
   )
-  set text(lang: lang, size: 10pt)
+  set text(lang: lang, size: text-size)
 
   // Set localization dictionary as metadata.
   _set-locale-dict(lang)
@@ -68,20 +80,20 @@
 
   // Section heading styles.
   show heading: it => block[
-    #set text(font: lang-fonts-config.heading)
+    #set text(font: lang-fonts-config.heading, size:0.92em)
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
-      line(length: 5cm)
+      line(length: 6cm)
     )
   ]
 
   let personal-info-block = {
     // An item listed in the personal information.
     let info-item(icon: none, url: none, body) = {
-      set text(size: 1.1em, fill: rgb(80, 80, 80))
+      set text(size: 1em, fill: rgb(60, 60, 60))
       if icon != none {
-        box(height: 1em, baseline: 0.2em, icon)
+        box(height: 1.1em, width: 1.1em, baseline: 0.26em, icon)
         h(0.2em)
       }
       if url != none {
@@ -94,14 +106,18 @@
     let webpage-item = none
     let github-item = none
     let twitter-item = none
+    let zhihu-item = none
     if webpage != none {
-      webpage-item = info-item(webpage, icon: image("figures/web.svg"), url: webpage)
+      webpage-item = info-item(raw(webpage), icon: image("figures/web.svg"), url: webpage)
     }
     if github-id != none {
-      github-item = info-item(github-id, icon: image("figures/github.svg"), url: "https://github.com/" + github-id)
+      github-item = info-item(raw(github-id), icon: image("figures/github.svg"), url: "https://github.com/" + github-id)
     }
     if (twitter-id != none) {
-      twitter-item = info-item(twitter-id, url: "https://twitter.com/" + twitter-id)
+      twitter-item = info-item(raw(twitter-id), url: "https://twitter.com/" + twitter-id)
+    }
+    if (zhihu-id != none) {
+      zhihu-item = info-item(raw(zhihu-id), icon: image("figures/zhihu.svg"), url: "https://www.zhihu.com/people/" + lower(zhihu-id))
     }
 
     // Personal information at the top.
@@ -109,11 +125,12 @@
     stack(
       dir: ltr,
       spacing: 1.5em,
-      info-item(phone, icon: image("figures/phone.svg")),
-      info-item(email, icon: image("figures/email.svg"), url: "mailto:" + email),
+      info-item(raw(phone), icon: image("figures/phone.svg")),
+      info-item(raw(email), icon: image("figures/email.svg"), url: "mailto:" + email),
       webpage-item,
       github-item,
       twitter-item,
+      zhihu-item,
     )
   }
 
