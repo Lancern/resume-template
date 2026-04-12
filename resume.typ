@@ -11,15 +11,20 @@
   webpage: none, // string, optional. URL to your home page.
   github-id: none, // string, optional. Your GitHub ID.
   locale: "en-us", // string, optional. Locale of the resume.
+  paper: "a4", // string, optional. The paper size of the resume.
+  page-margin: (top: 1.6cm, bottom: 1.6cm, left: 1.2cm, right: 1.2cm), // Page margin settings.
+  text-size: 10pt, // size, optional. The size of the main text.
+  title-size: 20pt, // size, optional. The size of the resume title.
+  heading-size: 13pt, // size, optional. The size of the section headings.
   body, // content, optional. The main content of the resume.
 ) = {
   // Set the document's basic properties.
   set document(author: name, title: name)
   set page(
-    paper: "a4",
-    margin: (top: 1.8cm, bottom: 1.8cm, left: 1.5cm, right: 1.5cm),
+    paper: paper,
+    margin: page-margin,
     footer: context [
-      #set text(size: 0.95em, fill: rgb(90, 90, 90))
+      #set text(size: 0.9em, fill: rgb(90, 90, 90))
       #datetime.today().display()
       #h(1fr)
       #counter(page).display("1 / 1", both: true)
@@ -28,27 +33,27 @@
 
   let lang = locale.split("-").at(0)
   let region = locale.split("-").at(1)
-  
+
   let all-fonts = toml("resources/fonts.toml")
   let fonts = all-fonts.at(locale)
 
   // Body text style
   set text(
     lang: lang,
-    size: 12pt,
-    font: fonts.body
+    size: text-size,
+    font: fonts.body,
   )
 
   // Title style
   show title: set text(
     font: fonts.title,
     weight: "bold",
-    size: 24pt,
+    size: title-size,
   )
 
   // Section heading style
   show heading: it => block[
-    #set text(font: fonts.heading, size: 15pt)
+    #set text(font: fonts.heading, size: heading-size)
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
@@ -59,7 +64,7 @@
   // Load vocabulary
   let vocab-catalog = toml("resources/vocab.toml")
   vocab.update(old => vocab-catalog.at(locale))
-  
+
   // An item listed in the personal information area.
   let info-item(icon: none, url: none, body) = {
     set text(size: 1em, fill: rgb(60, 60, 60))
