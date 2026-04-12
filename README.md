@@ -1,6 +1,6 @@
 # resume
 
-This repository contains a simple resume template written in [typst].
+This repository contains a simple resume template written in [Typst].
 
 <div style="display:flex;">
   <img src="figures/cn-example.png" height="300px" style="margin-right:4px;" />
@@ -9,20 +9,23 @@ This repository contains a simple resume template written in [typst].
 
 ## Usage and Build
 
-You need to install [typst] before you start.
+You need to install [Typst] before you start. If you have a Rust installation, you could install Typst via `cargo`:
 
-The file `resume.typ` contains the template definition, which defines the resume's layout and provides some useful utility functions to help typeset your resume.
-You can import this file into your own typst file to use the template:
+```bash
+cargo install --locked typst-cli
+```
+
+The file `resume.typ` contains the template definition, which defines the resume's layout and provides some useful utility functions to help typeset your resume. You can import this file into your own Typst file to use the template:
 
 ```typst
-#import "resume.typ": *
+#import "resume.typ": resume
 
 #show: resume.with(
   "Your name",
   "Your phone number",
   "Your email",
-  webpage: "https://your.home.page",
-  github-id: "YourGithubId",
+  webpage: "https://your.home.page",  // Optional
+  github-id: "YourGithubId",          // Optional
   lang: "en",
 )
 
@@ -38,7 +41,7 @@ You can import this file into your own typst file to use the template:
 // And more
 ```
 
-This repository provides two examples that you can directly modify and refer:
+This repository provides two examples that you can refer and modify:
 
 - `main-en.typ`: A resume example written in English;
 - `main-cn.typ`: A resume example written in simplified Chinese.
@@ -49,7 +52,7 @@ To build the resume, execute:
 typst compile main.typ
 ```
 
-Where `main.typ` is the file name of your typst source file.
+Where `main.typ` is the file name of your Typst source file.
 
 ## Contribution
 
