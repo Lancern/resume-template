@@ -2,7 +2,7 @@
 
 #show: resume.with(
   "Knuth Hacker",
-  "123456789",
+  "123-45678",
   "hacker@hacker.com",
   webpage: "https://hacker.me",
   github-id: "Hacker",

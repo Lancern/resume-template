@@ -1,36 +1,7 @@
 #import "github-pl-colors.typ": github-pl-colors
 
-// Fonts used for different languages.
-#let lang-fonts = (
-  en: (heading: "Linux Libertine", body: "Linux Libertine"),
-  cn: (
-    heading: ("Noto Sans CJK SC", "Heiti SC"),
-    body: ("Noto Serif CJK SC", "Songti SC"),
-  ),
-)
-
-// Set the localization dictionary according to the given language.
-#let _set-locale-dict(lang) = {
-  if lang == "cn" {
-    [
-      #metadata("简历") <locale-dict-resume>
-      #metadata("导师") <locale-dict-supervisor>
-      #metadata("至今") <locale-dict-now>
-    ]
-  } else {
-    [
-      #metadata("Resume") <locale-dict-resume>
-      #metadata("Supervisor") <locale-dict-supervisor>
-      #metadata("Now") <locale-dict-now>
-    ]
-  }
-}
-
-#let _get-locale-keyword(tag) = {
-  locate(loc => {
-    query(tag, loc).first().value
-  })
-}
+#let vocab = state("vocab", none)
+#let get-vocab(id) = context vocab.get().at(id)
 
 // This function defines the resume template.
 #let resume(
@@ -39,114 +10,97 @@
   email, // string. Your email address.
   webpage: none, // string, optional. URL to your home page.
   github-id: none, // string, optional. Your GitHub ID.
-  twitter-id: none, // string, optional. Your Twitter ID.
-  zhihu-id: none, // string, optional. Your Zhihu ID.
-  lang: "en", // string, optional. Language of the resume.
-  text-size: none, // length, optional. The text size of 1em.
-  page-margin: none, // dict (top, bottom, left, right), optional. Page margin.
+  locale: "en-us", // string, optional. Locale of the resume.
   body, // content, optional. The main content of the resume.
 ) = {
-  if text-size == none {
-    text-size = 10pt
-  }
-  if page-margin == none {
-    page-margin = (top: 1.2cm, bottom: 1.2cm, left: 1cm, right: 1cm)
-  }
-
   // Set the document's basic properties.
-  set document(author: name, title: "CV - " + name)
+  set document(author: name, title: name)
   set page(
     paper: "a4",
-    margin: page-margin,
+    margin: (top: 1.8cm, bottom: 1.8cm, left: 1.5cm, right: 1.5cm),
     footer: context [
       #set text(size: 0.95em, fill: rgb(90, 90, 90))
-
       #datetime.today().display()
       #h(1fr)
       #counter(page).display("1 / 1", both: true)
     ],
   )
-  set text(lang: lang, size: text-size)
 
-  // Set localization dictionary as metadata.
-  _set-locale-dict(lang)
+  let lang = locale.split("-").at(0)
+  let region = locale.split("-").at(1)
+  
+  let all-fonts = toml("resources/fonts.toml")
+  let fonts = all-fonts.at(locale)
 
-  let lang-fonts-config = lang-fonts.at(lang, default: none)
-  if lang-fonts-config == none {
-    lang-fonts-config = lang-fonts.en
-  }
+  // Body text style
+  set text(
+    lang: lang,
+    size: 12pt,
+    font: fonts.body
+  )
 
-  set text(font: lang-fonts-config.body)
+  // Title style
+  show title: set text(
+    font: fonts.title,
+    weight: "bold",
+    size: 24pt,
+  )
 
-  // Section heading styles.
+  // Section heading style
   show heading: it => block[
-    #set text(font: lang-fonts-config.heading, size: 0.92em)
+    #set text(font: fonts.heading, size: 15pt)
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
-      line(length: 6cm),
+      line(length: 8cm),
     )
   ]
 
-  let personal-info-block = {
-    // An item listed in the personal information.
-    let info-item(icon: none, url: none, body) = {
-      set text(size: 1em, fill: rgb(60, 60, 60))
-      if icon != none {
-        box(height: 1.1em, width: 1.1em, baseline: 0.26em, icon)
-        h(0.2em)
-      }
-      if url != none {
-        link(url, body)
-      } else {
-        body
-      }
+  // Load vocabulary
+  let vocab-catalog = toml("resources/vocab.toml")
+  vocab.update(old => vocab-catalog.at(locale))
+  
+  // An item listed in the personal information area.
+  let info-item(icon: none, url: none, body) = {
+    set text(size: 1em, fill: rgb(60, 60, 60))
+    if icon != none {
+      box(height: 1.1em, width: 1.1em, baseline: 0.26em, icon)
+      h(0.2em)
     }
+    if url != none {
+      link(url, body)
+    } else {
+      body
+    }
+  }
 
-    let webpage-item = none
-    let github-item = none
-    let twitter-item = none
-    let zhihu-item = none
-    if webpage != none {
-      webpage-item = info-item(raw(webpage), icon: image("resources/web.svg"), url: webpage)
-    }
-    if github-id != none {
-      github-item = info-item(
-        raw(github-id),
-        icon: image("resources/github.svg"),
-        url: "https://github.com/" + github-id,
-      )
-    }
-    if (twitter-id != none) {
-      twitter-item = info-item(raw(twitter-id), url: "https://twitter.com/" + twitter-id)
-    }
-    if (zhihu-id != none) {
-      zhihu-item = info-item(
-        raw(zhihu-id),
-        icon: image("resources/zhihu.svg"),
-        url: "https://www.zhihu.com/people/" + lower(zhihu-id),
-      )
-    }
-
-    let layout-phone(phone) = {
-      box(phone.split("-").map(raw).join(h(0.25em)))
-    }
-
-    // Personal information at the top.
-    block(text(font: lang-fonts-config.heading, size: 2em, weight: 700, name)) // Name
-    stack(
-      dir: ltr,
-      spacing: 1.5em,
-      info-item(layout-phone(phone), icon: image("resources/phone.svg")),
-      info-item(raw(email), icon: image("resources/email.svg"), url: "mailto:" + email),
-      webpage-item,
-      github-item,
-      twitter-item,
-      zhihu-item,
+  let webpage-item = none
+  let github-item = none
+  if webpage != none {
+    webpage-item = info-item(raw(webpage), icon: image("resources/web.svg"), url: webpage)
+  }
+  if github-id != none {
+    github-item = info-item(
+      raw(github-id),
+      icon: image("resources/github.svg"),
+      url: "https://github.com/" + github-id,
     )
   }
 
-  personal-info-block
+  let layout-phone(phone) = {
+    box(phone.split(" ").map(raw).join(h(0.25em)))
+  }
+
+  // Personal information at the top.
+  title()
+  stack(
+    dir: ltr,
+    spacing: 1em,
+    info-item(layout-phone(phone), icon: image("resources/phone.svg")),
+    info-item(raw(email), icon: image("resources/email.svg"), url: "mailto:" + email),
+    webpage-item,
+    github-item,
+  )
 
   // Main body.
   body
@@ -193,7 +147,7 @@
   body: none, // content, optional. Any additional content included in this item.
 ) = {
   if end-date == none {
-    end-date = _get-locale-keyword(<locale-dict-now>)
+    end-date = get-vocab("tonow")
   }
 
   let duration = [ #start-date - #end-date ]
@@ -202,7 +156,7 @@
   if supervisor != none {
     let supervisor-line = block[
       #set text(fill: rgb(140, 140, 140))
-      #_get-locale-keyword(<locale-dict-supervisor>): #supervisor
+      #context get-vocab("supervisor"): #supervisor
     ]
     if body == none {
       body = supervisor-line
@@ -243,7 +197,7 @@
   body: none, // string, optional. Any additional content associated with the work experience.
 ) = {
   if end-date == none {
-    end-date = _get-locale-keyword(<locale-dict-now>)
+    end-date = get-vocab("tonow")
   }
 
   let duration = start-date + " - " + end-date

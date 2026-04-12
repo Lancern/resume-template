@@ -2,11 +2,11 @@
 
 #show: resume.with(
   "惠计算",
-  "139 1234 5678",
+  "(+86) 139 1234 5678",
   "Huijisuan@hacker.com",
   webpage: "https://huijisuan.me",
   github-id: "Huijisuan",
-  lang: "cn",
+  locale: "zh-cn",
 )
 
 = 教育经历

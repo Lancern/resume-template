@@ -1,0 +1,19 @@
+[en-us]
+title = ["Noto Serif", "Linux Libertine"]
+heading = ["Noto Sans", "Linux Libertine"]
+body = ["Noto Serif", "Linux Libertine"]
+
+[zh-cn]
+title = ["Noto Serif CJK SC", "Noto Serif SC", "Songti SC"]
+heading = [
+    { name = "Noto Sans", covers = "latin-in-cjk" },
+    { name = "Noto Sans CJK SC" },
+    { name = "Noto Sans SC" },
+    { name = "Heiti SC" },
+]
+body = [
+    { name = "Noto Serif", covers = "latin-in-cjk" },
+    { name = "Noto Serif CJK SC" },
+    { name = "Noto Serif SC" },
+    { name = "Songti SC" },
+]
