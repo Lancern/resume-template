@@ -51,66 +51,6 @@ typst compile main.typ
 
 Where `main.typ` is the file name of your typst source file.
 
-## Reference
-
-This section lists all the public functions and their usages as defined in `resume.typ`.
-This section may require basic knowledge about the [typst language](https://typst.app/docs/reference/).
-
-> TODO: This section is still incomplete.
-
-### `resume.typ: resume` Function
-
-This function defines the resume template.
-
-Synopsis:
-
-```typst
-#let resume(
-  name,
-  phone,
-  email,
-  webpage: none,
-  github-id: none,
-  twitter-id: none,
-  photo: none,
-  lang: "en",
-  body,
-) = { /* ... */ }
-```
-
-Parameters:
-
-- `name`: `string`. Your name.
-- `phone`: `string`. Your phone number.
-- `email`: `string`. Your email number.
-- `webpage`: `string`, optional. URL to your home page.
-- `github-id`: `string`, optional. Your GitHub ID. A link to your github profile page will be automatically generated.
-- `twitter-id`: `string`, optional. Your Twitter ID. A link to your twitter profile page will be automatically generated.
-- `lang`: `string`, optional, default: `en`. The resume's language.
-- `body`: `content`, required. The main content of the resume.
-
-Returns: `content`, the content to be displayed in the output.
-
-### `resume-item` Function
-
-> TODO: documentation is incomplete
-
-### `edu-item` Function
-
-> TODO: documentation is incomplete
-
-### `award-item` Function
-
-> TODO: documentation is incomplete
-
-### `work-item` Function
-
-> TODO: documentation is incomplete
-
-### `develop-item` Function
-
-> TODO: documentation is incomplete
-
 ## Contribution
 
 Any kinds of contributions are welcomed, including bug reports, bug fixes, features requests, feature implementations, documentation improvements, etc.
