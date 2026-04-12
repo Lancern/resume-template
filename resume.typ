@@ -34,17 +34,17 @@
 
 // This function defines the resume template.
 #let resume(
-  name,     // string. Your name.
-  phone,    // string. Your phone number.
-  email,    // string. Your email address.
-  webpage: none,    // string, optional. URL to your home page.
-  github-id: none,  // string, optional. Your GitHub ID.
+  name, // string. Your name.
+  phone, // string. Your phone number.
+  email, // string. Your email address.
+  webpage: none, // string, optional. URL to your home page.
+  github-id: none, // string, optional. Your GitHub ID.
   twitter-id: none, // string, optional. Your Twitter ID.
-  zhihu-id: none,   // string, optional. Your Zhihu ID.
-  lang: "en",       // string, optional. Language of the resume.
-  text-size: none,  // length, optional. The text size of 1em.
+  zhihu-id: none, // string, optional. Your Zhihu ID.
+  lang: "en", // string, optional. Language of the resume.
+  text-size: none, // length, optional. The text size of 1em.
   page-margin: none, // dict (top, bottom, left, right), optional. Page margin.
-  body,     // content, optional. The main content of the resume.
+  body, // content, optional. The main content of the resume.
 ) = {
   if text-size == none {
     text-size = 10pt
@@ -64,7 +64,7 @@
       #datetime.today().display()
       #h(1fr)
       #counter(page).display("1 / 1", both: true)
-    ]
+    ],
   )
   set text(lang: lang, size: text-size)
 
@@ -80,11 +80,11 @@
 
   // Section heading styles.
   show heading: it => block[
-    #set text(font: lang-fonts-config.heading, size:0.92em)
+    #set text(font: lang-fonts-config.heading, size: 0.92em)
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
-      line(length: 6cm)
+      line(length: 6cm),
     )
   ]
 
@@ -108,16 +108,24 @@
     let twitter-item = none
     let zhihu-item = none
     if webpage != none {
-      webpage-item = info-item(raw(webpage), icon: image("figures/web.svg"), url: webpage)
+      webpage-item = info-item(raw(webpage), icon: image("resources/web.svg"), url: webpage)
     }
     if github-id != none {
-      github-item = info-item(raw(github-id), icon: image("figures/github.svg"), url: "https://github.com/" + github-id)
+      github-item = info-item(
+        raw(github-id),
+        icon: image("resources/github.svg"),
+        url: "https://github.com/" + github-id,
+      )
     }
     if (twitter-id != none) {
       twitter-item = info-item(raw(twitter-id), url: "https://twitter.com/" + twitter-id)
     }
     if (zhihu-id != none) {
-      zhihu-item = info-item(raw(zhihu-id), icon: image("figures/zhihu.svg"), url: "https://www.zhihu.com/people/" + lower(zhihu-id))
+      zhihu-item = info-item(
+        raw(zhihu-id),
+        icon: image("resources/zhihu.svg"),
+        url: "https://www.zhihu.com/people/" + lower(zhihu-id),
+      )
     }
 
     let layout-phone(phone) = {
@@ -125,12 +133,12 @@
     }
 
     // Personal information at the top.
-    block(text(font: lang-fonts-config.heading, size: 2em, weight: 700, name))  // Name
+    block(text(font: lang-fonts-config.heading, size: 2em, weight: 700, name)) // Name
     stack(
       dir: ltr,
       spacing: 1.5em,
-      info-item(layout-phone(phone), icon: image("figures/phone.svg")),
-      info-item(raw(email), icon: image("figures/email.svg"), url: "mailto:" + email),
+      info-item(layout-phone(phone), icon: image("resources/phone.svg")),
+      info-item(raw(email), icon: image("resources/email.svg"), url: "mailto:" + email),
       webpage-item,
       github-item,
       twitter-item,
@@ -147,10 +155,10 @@
 // Generate an item listed on the resume. An item may represent an education experience, an award received, a work
 // experience, a project development, anything that worth it on a resume.
 #let resume-item(
-  title,        // string. The title of the item.
-  badge: none,  // content, optional. The badge of the item. The badge appears at the right-top corner of the item.
-  subtitle: none,  // string, optional. The subtitle of the item.
-  body: none,   // content, optional. Any additional content associated with this item.
+  title, // string. The title of the item.
+  badge: none, // content, optional. The badge of the item. The badge appears at the right-top corner of the item.
+  subtitle: none, // string, optional. The subtitle of the item.
+  body: none, // content, optional. Any additional content associated with this item.
 ) = {
   let stack-items = (
     [
@@ -168,21 +176,21 @@
 
   stack(
     spacing: 0.6em,
-    ..stack-items
+    ..stack-items,
   )
 }
 
 // Generate a resume item that represent an educational experience.
 #let edu-item(
-  school,      // string. The school name.
-  degree,      // string. The degree name.
-  start-date,  // string. The start date of this education experience.
-  end-date: none,    // string, optional. The end date of this education experience.
-                     // Lack of this parameter indicates the experience lasted up to now.
-  department: none,  // string, optional. The department name.
-  major: none,       // string, optional. The major name.
-  supervisor: none,  // string, optional. The supervisor's name.
-  body: none,        // content, optional. Any additional content included in this item.
+  school, // string. The school name.
+  degree, // string. The degree name.
+  start-date, // string. The start date of this education experience.
+  end-date: none, // string, optional. The end date of this education experience.
+  // Lack of this parameter indicates the experience lasted up to now.
+  department: none, // string, optional. The department name.
+  major: none, // string, optional. The major name.
+  supervisor: none, // string, optional. The supervisor's name.
+  body: none, // content, optional. Any additional content included in this item.
 ) = {
   if end-date == none {
     end-date = _get-locale-keyword(<locale-dict-now>)
@@ -216,10 +224,10 @@
 
 // Generate a resume item that represents an award received.
 #let award-item(
-  name,  // string. Name of the competition, activity, etc. from which you received the award.
-  date,  // string. Date when you received the award.
+  name, // string. Name of the competition, activity, etc. from which you received the award.
+  date, // string. Date when you received the award.
   award, // string. Name of the award.
-  body: none,  // content, optional. Any additional content associated with the award.
+  body: none, // content, optional. Any additional content associated with the award.
 ) = {
   resume-item(name, badge: date, subtitle: award, body: body)
 }
@@ -227,12 +235,12 @@
 // Generate a resume item that represents a work experience.
 #let work-item(
   organization, // string. Name of the organization that you worked for.
-  position,     // string. Name of your position.
-  start-date,   // string. The start date of this work experience.
+  position, // string. Name of your position.
+  start-date, // string. The start date of this work experience.
   end-date: none, // string, optional. The end date of this work experience.
-                  // Lack of this parameter indicates that the work lasted up to now.
-  group: none,  // string, optional. Name of the internal group that you worked for within the organization.
-  body: none,   // string, optional. Any additional content associated with the work experience.
+  // Lack of this parameter indicates that the work lasted up to now.
+  group: none, // string, optional. Name of the internal group that you worked for within the organization.
+  body: none, // string, optional. Any additional content associated with the work experience.
 ) = {
   if end-date == none {
     end-date = _get-locale-keyword(<locale-dict-now>)
@@ -246,10 +254,10 @@
 
 // Generate a resume item that represents a development project.
 #let develop-item(
-  name,     // string. Name of the project.
+  name, // string. Name of the project.
   languages, // string. Programming languages used in the project.
-  role,     // string. Name of your role.
-  body: none,   // string, optional. Any additional content associated with the project.
+  role, // string. Name of your role.
+  body: none, // string, optional. Any additional content associated with the project.
 ) = {
   let badge = languages
     .split(regex(", *"))
