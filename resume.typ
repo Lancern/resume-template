@@ -12,10 +12,8 @@
   github-id: none, // string, optional. Your GitHub ID.
   locale: "en-us", // string, optional. Locale of the resume.
   paper: "a4", // string, optional. The paper size of the resume.
-  page-margin: (top: 1.6cm, bottom: 1.6cm, left: 1.2cm, right: 1.2cm), // Page margin settings.
+  page-margin: (top: 1.8cm, bottom: 1.8cm, left: 1.4cm, right: 1.4cm), // Page margin settings.
   text-size: 10pt, // size, optional. The size of the main text.
-  title-size: 20pt, // size, optional. The size of the resume title.
-  heading-size: 13pt, // size, optional. The size of the section headings.
   body, // content, optional. The main content of the resume.
 ) = {
   // Set the document's basic properties.
@@ -48,12 +46,12 @@
   show title: set text(
     font: fonts.title,
     weight: "bold",
-    size: title-size,
+    size: text-size * 2,
   )
 
   // Section heading style
   show heading: it => block[
-    #set text(font: fonts.heading, size: heading-size)
+    #set text(font: fonts.heading, size: text-size * 1.25)
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
@@ -117,30 +115,21 @@
   title, // string. The title of the item.
   badge: none, // content, optional. The badge of the item. The badge appears at the right-top corner of the item.
   subtitle: none, // string, optional. The subtitle of the item.
-  body: none, // content, optional. Any additional content associated with this item.
-) = {
-  let stack-items = (
-    [
-      #text(weight: "bold", title)
-      #h(1em)
-      #text(fill: rgb(140, 140, 140), style: "italic", subtitle)
-      #h(1fr)
-      #text(weight: "bold", badge)
-    ],
-  )
-
-  if body != none {
-    stack-items.push(body)
-  }
-
-  stack(
-    spacing: 0.6em,
-    ..stack-items,
-  )
-}
+  ..body, // content, optional. Any additional content associated with this item.
+) = stack(
+  spacing: 0.6em,
+  [
+    #text(weight: "bold", title)
+    #h(1em)
+    #text(fill: rgb(140, 140, 140), style: "italic", subtitle)
+    #h(1fr)
+    #text(weight: "bold", badge)
+  ],
+  ..body,
+)
 
 // Generate a resume item that represent an educational experience.
-#let edu-item(
+#let edu(
   school, // string. The school name.
   degree, // string. The degree name.
   start-date, // string. The start date of this education experience.
@@ -149,7 +138,7 @@
   department: none, // string, optional. The department name.
   major: none, // string, optional. The major name.
   supervisor: none, // string, optional. The supervisor's name.
-  body: none, // content, optional. Any additional content included in this item.
+  ..body, // content, optional. Any additional content included in this item.
 ) = {
   if end-date == none {
     end-date = get-vocab("tonow")
@@ -163,12 +152,14 @@
       #set text(fill: rgb(140, 140, 140))
       #context get-vocab("supervisor"): #supervisor
     ]
-    if body == none {
-      body = supervisor-line
+    if body.pos().len() == 0 {
+      body = (supervisor-line,)
     } else {
-      body = stack(
-        supervisor-line,
-        body,
+      body = (
+        stack(
+          supervisor-line,
+          body,
+        ),
       )
     }
   }
@@ -177,29 +168,29 @@
     school,
     badge: duration,
     subtitle: subtitle,
-    body: body,
+    ..body,
   )
 }
 
 // Generate a resume item that represents an award received.
-#let award-item(
+#let award(
   name, // string. Name of the competition, activity, etc. from which you received the award.
   date, // string. Date when you received the award.
   award, // string. Name of the award.
-  body: none, // content, optional. Any additional content associated with the award.
+  ..body, // content, optional. Any additional content associated with the award.
 ) = {
-  resume-item(name, badge: date, subtitle: award, body: body)
+  resume-item(name, badge: date, subtitle: award, ..body)
 }
 
 // Generate a resume item that represents a work experience.
-#let work-item(
+#let career(
   organization, // string. Name of the organization that you worked for.
   position, // string. Name of your position.
   start-date, // string. The start date of this work experience.
   end-date: none, // string, optional. The end date of this work experience.
   // Lack of this parameter indicates that the work lasted up to now.
   group: none, // string, optional. Name of the internal group that you worked for within the organization.
-  body: none, // string, optional. Any additional content associated with the work experience.
+  ..body, // content, optional. Any additional content associated with the work experience.
 ) = {
   if end-date == none {
     end-date = get-vocab("tonow")
@@ -208,15 +199,15 @@
   let duration = start-date + " - " + end-date
   let subtitle = (position, group).filter(i => i != none).join(", ")
 
-  resume-item(organization, badge: duration, subtitle: subtitle, body: body)
+  resume-item(organization, badge: duration, subtitle: subtitle, ..body)
 }
 
 // Generate a resume item that represents a development project.
-#let develop-item(
+#let project(
   name, // string. Name of the project.
   languages, // string. Programming languages used in the project.
   role, // string. Name of your role.
-  body: none, // string, optional. Any additional content associated with the project.
+  ..body, // content, optional. Any additional content associated with the project.
 ) = {
   let badge = languages
     .split(regex(", *"))
@@ -228,5 +219,5 @@
     ])
     .join()
 
-  resume-item(name, badge: badge, subtitle: role, body: body)
+  resume-item(name, badge: badge, subtitle: role, ..body)
 }

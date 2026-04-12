@@ -9,17 +9,16 @@
 )
 
 = Education
-#edu-item(
+#edu(
   "Number One University",
   "Bachelor",
   "2016.08",
   end-date: "2020.07",
   major: "Software Engineering",
-  body: [
-    GPA: top 5%
-  ]
-)
-#edu-item(
+)[
+  GPA: top 5%
+]
+#edu(
   "Number Two University",
   "Master",
   "2020.08",
@@ -34,12 +33,12 @@
 - *Others*: LLVM / CMake / git
 
 = Awards
-#award-item(
+#award(
   "ACM-ICPC 2018 EC-Final",
   "2018.11",
   "Gold Medal"
 )
-#award-item(
+#award(
   "ACM-ICPC 2018 World Final",
   "2019.04",
   "Gold Medal"
@@ -50,40 +49,40 @@
   "P != NP",
   badge: "2020.12 - 2023.03",
   subtitle: "Under peer review",
-  body: lorem(20),
+  lorem(20),
 )
 
 = Work Experiences
-#work-item(
+#career(
   "Google Corp.",
   "Software Development Intern",
   "2021.02",
   end-date: "2022.03",
-  body: lorem(40),
+  lorem(40),
 )
-#work-item(
+#career(
   "Microsoft Corp.",
   "Software Development Intern",
   "2022.03",
-  body: lorem(40),
+  lorem(40),
 )
 
 = Hobby Projects
-#develop-item(
+#project(
   "HackerA/ProjectA",
   "Rust, C",
   "Open-Source Contributor",
-  body: lorem(40),
+  lorem(40),
 )
-#develop-item(
+#project(
   "HackerB/ProjectB",
   "C++",
   "Open-Source Contributor",
-  body: lorem(40),
+  lorem(40),
 )
-#develop-item(
+#project(
   "Hacker/ProjectC",
   "Agda",
   "Owner",
-  body: lorem(40),
+  lorem(40),
 )
