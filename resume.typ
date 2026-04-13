@@ -1,3 +1,5 @@
+#import "@preview/oxifmt:1.0.0": strfmt
+
 #import "github-pl-colors.typ": github-pl-colors
 
 #let vocab = state("vocab", none)
@@ -16,8 +18,16 @@
   text-size: 10pt, // size, optional. The size of the main text.
   body, // content, optional. The main content of the resume.
 ) = {
+  // Load vocabulary
+  let vocab-catalog = toml("resources/vocab.toml")
+  vocab.update(old => vocab-catalog.at(locale))
+
   // Set the document's basic properties.
-  set document(author: name, title: name)
+  set document(
+    title: strfmt(vocab-catalog.at(locale).resume-title, name),
+    author: name,
+    description: strfmt(vocab-catalog.at(locale).resume-description, name)
+  )
   set page(
     paper: paper,
     margin: page-margin,
@@ -59,10 +69,6 @@
     )
   ]
 
-  // Load vocabulary
-  let vocab-catalog = toml("resources/vocab.toml")
-  vocab.update(old => vocab-catalog.at(locale))
-
   // An item listed in the personal information area.
   let info-item(icon: none, url: none, body) = {
     set text(size: 1em, fill: rgb(60, 60, 60))
@@ -95,7 +101,7 @@
   }
 
   // Personal information at the top.
-  title()
+  title(name)
   stack(
     dir: ltr,
     spacing: 1em,

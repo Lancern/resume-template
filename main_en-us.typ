@@ -15,15 +15,13 @@
   "2016.08",
   end-date: "2020.07",
   major: "Software Engineering",
-)[
-  GPA: top 5%
-]
+)
 #edu(
   "Number Two University",
   "Master",
   "2020.08",
+  end-date: "2023.07",
   major: "Computer Science",
-  supervisor: "Old Hacker",
 )
 
 = Professional Skills
