@@ -1,7 +1,5 @@
 #import "@preview/oxifmt:1.0.0": strfmt
 
-#import "github-pl-colors.typ": github-pl-colors
-
 #let vocab = state("vocab", none)
 #let get-vocab(id) = context vocab.get().at(id)
 
@@ -211,16 +209,21 @@
 // Generate a resume item that represents a development project.
 #let project(
   name, // string. Name of the project.
-  languages, // string. Programming languages used in the project.
-  role, // string. Name of your role.
+  lang, // string or array of string. Programming language(s) used in the project.
+  role, // string. Your role in the project.
   ..body, // content, optional. Any additional content associated with the project.
 ) = {
-  let badge = languages
-    .split(regex(", *"))
-    .map(i => (github-pl-colors.at(lower(i), default: none), i))
+  if type(lang) == str {
+    lang = (lang,)
+  }
+
+  let language-catalog = yaml("resources/languages.yml")
+
+  let badge = lang
+    .map(i => (language-catalog.at(i, default: none), i))
     .filter(i => i.first() != none)
     .map(i => [
-      #box(baseline: 0.2em, circle(height: 1em, fill: i.first()))
+      #box(baseline: 0.2em, circle(height: 1em, fill: rgb(i.first().color)))
       #i.last()
     ])
     .join()

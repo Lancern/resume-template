@@ -68,7 +68,7 @@
 = Hobby Projects
 #project(
   "HackerA/ProjectA",
-  "Rust, C",
+  ("Rust", "C"),
   "Open-Source Contributor",
   lorem(38),
 )
