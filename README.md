@@ -3,8 +3,8 @@
 This repository contains a simple resume template written in [Typst].
 
 <div style="display:flex;">
-  <img src="figures/example_zh-ch.png" height="300px" style="margin-right:4px;" />
-  <img src="figures/example_en-us.png" height="300px" />
+  <img src="resources/example_zh-ch.png" height="300px" style="margin-right:4px;" />
+  <img src="resources/example_en-us.png" height="300px" />
 </div>
 
 ## Usage and Build
