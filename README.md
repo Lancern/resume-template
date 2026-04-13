@@ -3,8 +3,8 @@
 This repository contains a simple resume template written in [Typst].
 
 <div style="display:flex;">
-  <img src="figures/cn-example.png" height="300px" style="margin-right:4px;" />
-  <img src="figures/en-example.png" height="300px" />
+  <img src="figures/example_zh-ch.png" height="300px" style="margin-right:4px;" />
+  <img src="figures/example_en-us.png" height="300px" />
 </div>
 
 ## Usage and Build
@@ -18,7 +18,7 @@ cargo install --locked typst-cli
 The file `resume.typ` contains the template definition, which defines the resume's layout and provides some useful utility functions to help typeset your resume. You can import this file into your own Typst file to use the template:
 
 ```typst
-#import "resume.typ": resume
+#import "resume.typ": *
 
 #show: resume.with(
   "Your name",
@@ -43,8 +43,8 @@ The file `resume.typ` contains the template definition, which defines the resume
 
 This repository provides two examples that you can refer and modify:
 
-- `main-en.typ`: A resume example written in English;
-- `main-cn.typ`: A resume example written in simplified Chinese.
+- `main_en-us.typ`: A resume example written in locale `en-us`;
+- `main_zh-cn.typ`: A resume example written in locale `zh-cn`.
 
 To build the resume, execute:
 
