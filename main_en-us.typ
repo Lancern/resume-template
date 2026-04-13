@@ -56,13 +56,13 @@
   "Software Development Intern",
   "2021.02",
   end-date: "2022.03",
-  lorem(40),
+  lorem(20),
 )
 #career(
   "Microsoft Corp.",
   "Software Development Intern",
   "2022.03",
-  lorem(40),
+  lorem(20),
 )
 
 = Hobby Projects
@@ -70,17 +70,17 @@
   "HackerA/ProjectA",
   "Rust, C",
   "Open-Source Contributor",
-  lorem(40),
+  lorem(38),
 )
 #project(
   "HackerB/ProjectB",
   "C++",
   "Open-Source Contributor",
-  lorem(40),
+  lorem(38),
 )
 #project(
   "Hacker/ProjectC",
   "Agda",
   "Owner",
-  lorem(40),
+  lorem(38),
 )

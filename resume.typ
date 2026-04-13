@@ -14,8 +14,8 @@
   github-id: none, // string, optional. Your GitHub ID.
   locale: "en-us", // string, optional. Locale of the resume.
   paper: "a4", // string, optional. The paper size of the resume.
-  page-margin: (top: 1.8cm, bottom: 1.8cm, left: 1.4cm, right: 1.4cm), // Page margin settings.
-  text-size: 10pt, // size, optional. The size of the main text.
+  page-margin: 1.4cm, // Page margin settings.
+  text-size: 11pt, // size, optional. The size of the main text.
   body, // content, optional. The main content of the resume.
 ) = {
   // Load vocabulary
@@ -26,7 +26,7 @@
   set document(
     title: strfmt(vocab-catalog.at(locale).resume-title, name),
     author: name,
-    description: strfmt(vocab-catalog.at(locale).resume-description, name)
+    description: strfmt(vocab-catalog.at(locale).resume-description, name),
   )
   set page(
     paper: paper,
@@ -127,7 +127,7 @@
   [
     #text(weight: "bold", title)
     #h(1em)
-    #text(fill: rgb(140, 140, 140), style: "italic", subtitle)
+    #text(fill: rgb(120, 120, 120), style: "italic", subtitle)
     #h(1fr)
     #text(weight: "bold", badge)
   ],
