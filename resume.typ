@@ -206,9 +206,9 @@
   resume-item(organization, badge: duration, subtitle: subtitle, ..body)
 }
 
-// Generate a resume item that represents a development project.
-#let project(
-  name, // string. Name of the project.
+// Generate a resume item that represents an open source contribution.
+#let open-source-contribution(
+  name, // string. Name of the open source project.
   lang, // string or array of string. Programming language(s) used in the project.
   role, // string. Your role in the project.
   ..body, // content, optional. Any additional content associated with the project.
@@ -229,4 +229,11 @@
     .join()
 
   resume-item(name, badge: badge, subtitle: role, ..body)
+}
+
+#let project(name, body) = {
+  text(weight: "bold", name)
+  h(1.2em)
+  body
+  parbreak()
 }

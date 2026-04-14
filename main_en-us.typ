@@ -66,21 +66,17 @@
 )
 
 = Hobby Projects
-#project(
+#open-source-contribution(
   "HackerA/ProjectA",
   ("Rust", "C"),
   "Open-Source Contributor",
-  lorem(38),
-)
-#project(
+)[
+  #project("Subproject 1.", lorem(20))
+  #project("Subproject 2.", lorem(20))
+]
+#open-source-contribution(
   "HackerB/ProjectB",
   "C++",
   "Open-Source Contributor",
-  lorem(38),
-)
-#project(
-  "Hacker/ProjectC",
-  "Agda",
-  "Owner",
   lorem(38),
 )
