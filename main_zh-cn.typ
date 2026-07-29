@@ -1,4 +1,4 @@
-#import "resume.typ": *
+#import "resume.typ": award, career, edu, open-source-contribution, project, resume, resume-item
 
 #show: resume.with(
   "惠计算",
@@ -35,12 +35,12 @@
 #award(
   "ACM-ICPC 2018 EC-Final",
   "2018.11",
-  "金牌"
+  "金牌",
 )
 #award(
   "ACM-ICPC 2018 World Final",
   "2019.04",
-  "金牌"
+  "金牌",
 )
 
 = 科研经历

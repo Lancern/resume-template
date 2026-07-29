@@ -18,7 +18,7 @@ cargo install --locked typst-cli
 The file `resume.typ` contains the template definition, which defines the resume's layout and provides some useful utility functions to help typeset your resume. You can import this file into your own Typst file to use the template:
 
 ```typst
-#import "resume.typ": *
+#import "resume.typ": resume, resume-item, edu, award, career, open-source-contribution, project
 
 #show: resume.with(
   "Your name",

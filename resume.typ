@@ -1,7 +1,10 @@
 #import "@preview/oxifmt:1.0.0": strfmt
 
-#let vocab = state("vocab", none)
-#let get-vocab(id) = context vocab.get().at(id)
+#let _vocab-catalog = toml("resources/vocab.toml")
+#let _get-vocab(id) = context {
+  let locale = text.lang + "-" + lower(text.region)
+  _vocab-catalog.at(locale).at(id)
+}
 
 // This function defines the resume template.
 #let resume(
@@ -16,15 +19,11 @@
   text-size: 11pt, // size, optional. The size of the main text.
   body, // content, optional. The main content of the resume.
 ) = {
-  // Load vocabulary
-  let vocab-catalog = toml("resources/vocab.toml")
-  vocab.update(old => vocab-catalog.at(locale))
-
   // Set the document's basic properties.
   set document(
-    title: strfmt(vocab-catalog.at(locale).resume-title, name),
+    title: strfmt(_vocab-catalog.at(locale).resume-title, name),
     author: name,
-    description: strfmt(vocab-catalog.at(locale).resume-description, name),
+    description: strfmt(_vocab-catalog.at(locale).resume-description, name),
   )
   set page(
     paper: paper,
@@ -46,6 +45,7 @@
   // Body text style
   set text(
     lang: lang,
+    region: region,
     size: text-size,
     font: fonts.body,
   )
@@ -145,7 +145,7 @@
   ..body, // content, optional. Any additional content included in this item.
 ) = {
   if end-date == none {
-    end-date = get-vocab("tonow")
+    end-date = _get-vocab("tonow")
   }
 
   let duration = [ #start-date - #end-date ]
@@ -154,7 +154,7 @@
   if supervisor != none {
     let supervisor-line = block[
       #set text(fill: rgb(140, 140, 140))
-      #context get-vocab("supervisor"): #supervisor
+      #context _get-vocab("supervisor"): #supervisor
     ]
     if body.pos().len() == 0 {
       body = (supervisor-line,)
@@ -197,7 +197,7 @@
   ..body, // content, optional. Any additional content associated with the work experience.
 ) = {
   if end-date == none {
-    end-date = get-vocab("tonow")
+    end-date = _get-vocab("tonow")
   }
 
   let duration = start-date + " - " + end-date

@@ -1,4 +1,4 @@
-#import "resume.typ": *
+#import "resume.typ": award, career, edu, open-source-contribution, project, resume, resume-item
 
 #show: resume.with(
   "Knuth Hacker",
@@ -34,12 +34,12 @@
 #award(
   "ACM-ICPC 2018 EC-Final",
   "2018.11",
-  "Gold Medal"
+  "Gold Medal",
 )
 #award(
   "ACM-ICPC 2018 World Final",
   "2019.04",
-  "Gold Medal"
+  "Gold Medal",
 )
 
 = Research Experiences
