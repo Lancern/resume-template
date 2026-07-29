@@ -30,7 +30,7 @@
     paper: paper,
     margin: page-margin,
     footer: context [
-      #set text(size: 0.9em, fill: rgb(90, 90, 90))
+      #set text(size: 0.9em, fill: rgb(150, 150, 150))
       #datetime.today().display()
       #h(1fr)
       #counter(page).display("1 / 1", both: true)
