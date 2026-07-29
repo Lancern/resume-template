@@ -17,6 +17,7 @@
   paper: "a4", // string, optional. The paper size of the resume.
   page-margin: 1.4cm, // Page margin settings.
   text-size: 11pt, // size, optional. The size of the main text.
+  fonts: (:), // dictionary, optional. Font overrides for the title, body, and headings.
   body, // content, optional. The main content of the resume.
 ) = {
   // Set the document's basic properties.
@@ -40,26 +41,29 @@
   let region = locale.split("-").at(1)
 
   let all-fonts = toml("resources/fonts.toml")
-  let fonts = all-fonts.at(locale)
+  let default-fonts = all-fonts.at(locale)
+  let title-font = fonts.at("title", default: default-fonts.title)
+  let body-font = fonts.at("body", default: default-fonts.body)
+  let heading-font = fonts.at("heading", default: default-fonts.heading)
 
   // Body text style
   set text(
     lang: lang,
     region: region,
     size: text-size,
-    font: fonts.body,
+    font: body-font,
   )
 
   // Title style
   show title: set text(
-    font: fonts.title,
+    font: title-font,
     weight: "bold",
     size: text-size * 2,
   )
 
   // Section heading style
   show heading: it => block[
-    #set text(font: fonts.heading, size: text-size * 1.25)
+    #set text(font: heading-font, size: text-size * 1.25)
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
