@@ -1,4 +1,4 @@
-#import "../resume.typ": award, career, edu, open-source-contribution, project, resume, resume-item
+#import "resume.typ": award, career, edu, item, oss-contrib, resume, sub-item
 
 #show: resume.with(
   "Knuth Hacker",
@@ -43,7 +43,7 @@
 )
 
 = Research Experiences
-#resume-item(
+#item(
   "P != NP",
   badge: "2020.12 - 2023.03",
   subtitle: "Under peer review",
@@ -66,15 +66,15 @@
 )
 
 = Hobby Projects
-#open-source-contribution(
+#oss-contrib(
   "HackerA/ProjectA",
   ("Rust", "C"),
   "Open-Source Contributor",
 )[
-  #project("Subproject 1.", lorem(20))
-  #project("Subproject 2.", lorem(20))
+  #sub-item("Subproject 1.", lorem(20))
+  #sub-item("Subproject 2.", lorem(20))
 ]
-#open-source-contribution(
+#oss-contrib(
   "HackerB/ProjectB",
   "C++",
   "Open-Source Contributor",

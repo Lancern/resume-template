@@ -18,7 +18,7 @@ cargo install --locked typst-cli
 The file `resume.typ` contains the template definition, which defines the resume's layout and provides some useful utility functions to help typeset your resume. You can import this file into your own Typst file to use the template:
 
 ```typst
-#import "resume.typ": resume, resume-item, edu, award, career, open-source-contribution, project
+#import "resume.typ": *
 
 #show: resume.with(
   "Your name",
@@ -43,22 +43,18 @@ The file `resume.typ` contains the template definition, which defines the resume
 
 This repository provides two examples that you can refer and modify:
 
-- `main_en-us.typ`: A resume example written in locale `en-us`;
-- `main_zh-cn.typ`: A resume example written in locale `zh-cn`.
+- `example_en-us.typ`: A resume example written in locale `en-us`;
+- `example_zh-cn.typ`: A resume example written in locale `zh-cn`.
 
-To build the resume, execute:
+To build the example, run:
 
 ```bash
-typst compile main.typ
+typst compile example_zh-cn.typ
 ```
-
-Where `main.typ` is the file name of your Typst source file.
 
 ## Contribution
 
-Any kinds of contributions are welcomed, including bug reports, bug fixes, features requests, feature implementations, documentation improvements, etc.
-Feel free to open a new issue or PR!
-If you have any questions on the usage of this template, feel free to open a new issue.
+Any kinds of contributions are welcomed, including bug reports, bug fixes, features requests, feature implementations, documentation improvements, etc. Feel free to open a new issue or PR! If you have any questions on the usage of this template, feel free to open a new issue.
 
 ## License
 

@@ -1,4 +1,4 @@
-#import "../resume.typ": award, career, edu, open-source-contribution, project, resume, resume-item
+#import "resume.typ": award, career, edu, item, oss-contrib, resume, sub-item
 
 #show: resume.with(
   "惠计算",
@@ -44,7 +44,7 @@
 )
 
 = 科研经历
-#resume-item(
+#item(
   "P != NP",
   badge: "2020.12 - 2023.03",
   subtitle: "已投稿",
@@ -70,19 +70,19 @@
 ]
 
 = 开发项目
-#open-source-contribution(
+#oss-contrib(
   "HackerA/ProjectA",
   ("Rust", "C++"),
   "开源贡献者",
 )[
-  #project("子项目1")[
+  #sub-item("子项目1")[
     春对夏，秋对冬，暮鼓对晨钟。观山对玩水，绿竹对苍松。冯妇虎，叶公龙，舞蝶对鸣蛩。衔泥双紫燕，课蜜几黄蜂。春日园中莺恰恰，秋天塞外雁雍雍。秦岭云横，迢递八千远路；巫山雨洗，嵯峨十二危峰。
   ]
-  #project("子项目2")[
+  #sub-item("子项目2")[
     仁对义，让对恭，禹舜对羲农。雪花对云叶，芍药对芙蓉。陈后主，汉中宗，绣虎对雕龙。柳塘风淡淡，花圃月浓浓。春日正宜朝看蝶，秋风那更夜闻蛩。战士邀功，必借干戈成勇武；逸民适志，须凭诗酒养疏慵。
   ]
 ]
-#open-source-contribution(
+#oss-contrib(
   "Hacker/ProjectC",
   "Agda",
   "拥有者",
