@@ -13,6 +13,7 @@
   email, // string. Your email address.
   webpage: none, // string, optional. URL to your home page.
   github-id: none, // string, optional. Your GitHub ID.
+  date: datetime.today(),  // datetime, optional. The date when the resume is generated.
   locale: "en-us", // string, optional. Locale of the resume.
   paper: "a4", // string, optional. The paper size of the resume.
   page-margin: 1.4cm, // Page margin settings.
@@ -31,7 +32,7 @@
     margin: page-margin,
     footer: context [
       #set text(size: 0.9em, fill: rgb(150, 150, 150))
-      #datetime.today().display()
+      #date.display()
       #h(1fr)
       #counter(page).display("1 / 1", both: true)
     ],
