@@ -1,4 +1,4 @@
-#import "resume.typ": award, career, edu, open-source-contribution, project, resume, resume-item
+#import "../resume.typ": award, career, edu, open-source-contribution, project, resume, resume-item
 
 #show: resume.with(
   "Knuth Hacker",
