@@ -1,0 +1,17 @@
+[package]
+name = "resume-template"
+version = "0.2.0"
+authors = ["Sirui Mu <msrlancern@gmail.com>"]
+description = "A simple resume template for developers"
+license = "CC0"
+
+repository = "https://github.com/Lancern/resume-template"
+keywords = ["resume", "template", "developer", "cv"]
+categories = ["cv"]
+
+entrypoint = "resume.typ"
+
+exclude = [
+    "example_*.typ",
+    "resources/*.png",
+]

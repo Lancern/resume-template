@@ -1,6 +1,6 @@
 # resume
 
-This repository contains a simple resume template written in [Typst].
+This repository contains a simple resume template for developers written in [Typst].
 
 <div style="display:flex;">
   <img src="resources/example_zh-cn.png" height="300px" style="margin-right:4px;" />
