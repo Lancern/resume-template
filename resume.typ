@@ -6,20 +6,36 @@
   _vocab-catalog.at(locale).at(id)
 }
 
-// This function defines the resume template.
+/// The resume template.
+///
+/// - name: string, your name.
+/// - phone: string, your phone number.
+/// - email: string, your email address.
+/// - webpage: string or none, URL to your home page. Default to none.
+/// - github-id: string or none, your GitHub ID. Default to none.
+/// - date: datetime, the date when the resume is generated. Default to the
+///   current date.
+/// - locale: string, locale of the resume. Default to `"en-us"`.
+/// - paper: string, paper size of the resume. Default to `"a4"`.
+/// - page-margin: length or dictionary, page margin settings. Default to
+///   `1.4cm`.
+/// - text-size: length, size of the main text. Default to `11pt`.
+/// - fonts: dictionary, font overrides for the title, body, and headings.
+///   Default to an empty dictionary.
+/// - body: content, main content of the resume.
 #let resume(
-  name, // string. Your name.
-  phone, // string. Your phone number.
-  email, // string. Your email address.
-  webpage: none, // string, optional. URL to your home page.
-  github-id: none, // string, optional. Your GitHub ID.
-  date: datetime.today(),  // datetime, optional. The date when the resume is generated.
-  locale: "en-us", // string, optional. Locale of the resume.
-  paper: "a4", // string, optional. The paper size of the resume.
-  page-margin: 1.4cm, // Page margin settings.
-  text-size: 11pt, // size, optional. The size of the main text.
-  fonts: (:), // dictionary, optional. Font overrides for the title, body, and headings.
-  body, // content, optional. The main content of the resume.
+  name,
+  phone,
+  email,
+  webpage: none,
+  github-id: none,
+  date: datetime.today(),
+  locale: "en-us",
+  paper: "a4",
+  page-margin: 1.4cm,
+  text-size: 11pt,
+  fonts: (:),
+  body,
 ) = {
   // Set the document's basic properties.
   set document(
@@ -118,13 +134,19 @@
   body
 }
 
-// Generate an item listed on the resume. An item may represent an education experience, an award received, a work
-// experience, a project development, anything that worth it on a resume.
+/// An item listed on the resume. An item may represent an education experience,
+/// an award, a work experience, a project, or anything else worth listing.
+///
+/// - title: string, title of the item.
+/// - badge: content or none, badge displayed in the top-right corner of the
+///   item. Default to none.
+/// - subtitle: string or none, subtitle of the item. Default to none.
+/// - body: content, additional content associated with this item.
 #let resume-item(
-  title, // string. The title of the item.
-  badge: none, // content, optional. The badge of the item. The badge appears at the right-top corner of the item.
-  subtitle: none, // string, optional. The subtitle of the item.
-  ..body, // content, optional. Any additional content associated with this item.
+  title,
+  badge: none,
+  subtitle: none,
+  ..body,
 ) = stack(
   spacing: 0.6em,
   [
@@ -137,17 +159,26 @@
   ..body,
 )
 
-// Generate a resume item that represent an educational experience.
+/// A resume item that represents an educational experience.
+///
+/// - school: string, school name.
+/// - degree: string, degree name.
+/// - start-date: string, start date of the education experience.
+/// - end-date: string or none, end date of the education experience. Default to
+///   none, indicating that the experience has not ended.
+/// - department: string or none, department name. Default to none.
+/// - major: string or none, major name. Default to none.
+/// - supervisor: string or none, supervisor's name. Default to none.
+/// - body: content, additional content included in this item.
 #let edu(
-  school, // string. The school name.
-  degree, // string. The degree name.
-  start-date, // string. The start date of this education experience.
-  end-date: none, // string, optional. The end date of this education experience.
-  // Lack of this parameter indicates the experience lasted up to now.
-  department: none, // string, optional. The department name.
-  major: none, // string, optional. The major name.
-  supervisor: none, // string, optional. The supervisor's name.
-  ..body, // content, optional. Any additional content included in this item.
+  school,
+  degree,
+  start-date,
+  end-date: none,
+  department: none,
+  major: none,
+  supervisor: none,
+  ..body,
 ) = {
   if end-date == none {
     end-date = _get-vocab("tonow")
@@ -181,25 +212,39 @@
   )
 }
 
-// Generate a resume item that represents an award received.
+/// A resume item that represents an award received.
+///
+/// - name: string, name of the competition, activity, or other source of the
+///   award.
+/// - date: string, date when the award was received.
+/// - award: string, name of the award.
+/// - body: content, additional content associated with the award.
 #let award(
-  name, // string. Name of the competition, activity, etc. from which you received the award.
-  date, // string. Date when you received the award.
-  award, // string. Name of the award.
-  ..body, // content, optional. Any additional content associated with the award.
+  name,
+  date,
+  award,
+  ..body,
 ) = {
   resume-item(name, badge: date, subtitle: award, ..body)
 }
 
-// Generate a resume item that represents a work experience.
+/// A resume item that represents a work experience.
+///
+/// - organization: string, name of the organization.
+/// - position: string, name of the position.
+/// - start-date: string, start date of the work experience.
+/// - end-date: string or none, end date of the work experience. Default to
+///   none, indicating that the work has not ended.
+/// - group: string or none, name of the internal group within the organization.
+///   Default to none.
+/// - body: content, additional content associated with the work experience.
 #let career(
-  organization, // string. Name of the organization that you worked for.
-  position, // string. Name of your position.
-  start-date, // string. The start date of this work experience.
-  end-date: none, // string, optional. The end date of this work experience.
-  // Lack of this parameter indicates that the work lasted up to now.
-  group: none, // string, optional. Name of the internal group that you worked for within the organization.
-  ..body, // content, optional. Any additional content associated with the work experience.
+  organization,
+  position,
+  start-date,
+  end-date: none,
+  group: none,
+  ..body,
 ) = {
   if end-date == none {
     end-date = _get-vocab("tonow")
@@ -211,12 +256,18 @@
   resume-item(organization, badge: duration, subtitle: subtitle, ..body)
 }
 
-// Generate a resume item that represents an open source contribution.
+/// A resume item that represents an open source contribution.
+///
+/// - name: string, name of the open source project.
+/// - lang: string or array of strings, programming languages used in the
+///   project.
+/// - role: string, role in the project.
+/// - body: content, additional content associated with the project.
 #let open-source-contribution(
-  name, // string. Name of the open source project.
-  lang, // string or array of string. Programming language(s) used in the project.
-  role, // string. Your role in the project.
-  ..body, // content, optional. Any additional content associated with the project.
+  name,
+  lang,
+  role,
+  ..body,
 ) = {
   if type(lang) == str {
     lang = (lang,)
