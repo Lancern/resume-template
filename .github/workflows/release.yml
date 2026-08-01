@@ -1,0 +1,63 @@
+name: Create release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build examples and create release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate tag
+        id: tag
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping release for tag '$GITHUB_REF_NAME'."
+          fi
+
+      - name: Check out repository
+        if: steps.tag.outputs.valid == 'true'
+        uses: actions/checkout@v6
+
+      - name: Install necessary fonts
+        if: steps.tag.outputs.valid == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            fonts-linuxlibertine fonts-noto-cjk fonts-noto-cjk-extra \
+            fonts-noto-core
+
+      - name: Install Typst
+        if: steps.tag.outputs.valid == 'true'
+        uses: typst-community/setup-typst@v5
+        with:
+          typst-version: 0.14.2
+
+      - name: Build examples
+        if: steps.tag.outputs.valid == 'true'
+        run: |
+          mkdir -p dist
+          typst compile example_en-us.typ dist/example_en-us.pdf
+          typst compile example_zh-cn.typ dist/example_zh-cn.pdf
+
+      - name: Create GitHub release
+        if: steps.tag.outputs.valid == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            dist/example_en-us.pdf \
+            dist/example_zh-cn.pdf \
+            --generate-notes \
+            --title "$GITHUB_REF_NAME" \
+            --verify-tag
