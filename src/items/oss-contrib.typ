@@ -28,5 +28,5 @@
     ])
     .join()
 
-  item(name, badge: badge, subtitle: role, ..body)
+  item(name, badge: badge, subtitles: (role,), ..body)
 }

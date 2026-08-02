@@ -136,32 +136,39 @@
 /// - title: string, title of the item.
 /// - badge: content or none, badge displayed in the top-right corner of the
 ///   item. Default to none.
-/// - subtitle: string or none, subtitle of the item. Default to none.
+/// - subtitles: array, subtitles of the item. Default to an empty array.
 /// - body: content, additional content associated with this item.
 #let item(
   title,
   badge: none,
-  subtitle: none,
+  subtitles: (),
   ..body,
-) = stack(
-  spacing: 0.6em,
-  [
-    #text(weight: "bold", title)
-    #h(1em)
-    #text(fill: rgb(120, 120, 120), style: "italic", subtitle)
-    #h(1fr)
-    #text(weight: "bold", badge)
-  ],
-  ..body,
-)
+) = {
+  let subtitle-texts = subtitles.map(st => text(
+    fill: rgb(120, 120, 120),
+    emph(st),
+  ))
+
+  stack(
+    dir: ttb,
+    spacing: 0.6em,
+    block[
+      #text(weight: "bold", title)
+      #h(2em)
+      #box(stack(dir: ltr, spacing: 1em, ..subtitle-texts))
+      #h(1fr)
+      #text(weight: "bold", badge)
+    ],
+    ..body
+  )
+}
 
 /// A named subitem listed within a resume item.
 ///
 /// - name: string, name of the sub-item.
 /// - body: content, additional content associated with the sub-item.
-#let sub-item(name, body) = {
-  text(weight: "bold", name)
-  h(1.2em)
-  body
-  parbreak()
-}
+#let sub-item(name, body) = block[
+  #text(weight: "bold", name)
+  #h(1.2em)
+  #body
+]

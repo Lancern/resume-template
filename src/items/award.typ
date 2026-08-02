@@ -13,5 +13,5 @@
   award,
   ..body,
 ) = {
-  item(name, badge: date, subtitle: award, ..body)
+  item(name, badge: date, subtitles: (award,), ..body)
 }

@@ -46,7 +46,7 @@
 #item(
   "P != NP",
   badge: "2020.12 - 2023.03",
-  subtitle: "Under peer review",
+  subtitles: ("Under peer review",),
   lorem(20),
 )
 

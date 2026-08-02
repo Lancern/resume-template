@@ -24,7 +24,7 @@
   }
 
   let duration = start-date + " - " + end-date
-  let subtitle = (position, group).filter(i => i != none).join(", ")
+  let subtitles = (position, group).filter(i => i != none)
 
-  item(organization, badge: duration, subtitle: subtitle, ..body)
+  item(organization, badge: duration, subtitles: subtitles, ..body)
 }

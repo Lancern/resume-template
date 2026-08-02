@@ -27,7 +27,7 @@
   }
 
   let duration = [ #start-date - #end-date ]
-  let subtitle = (degree, major, department).filter(i => i != none).join(", ")
+  let subtitles = (degree, major, department).filter(i => i != none)
 
   if supervisor != none {
     let supervisor-line = block[
@@ -49,7 +49,7 @@
   item(
     school,
     badge: duration,
-    subtitle: subtitle,
+    subtitles: subtitles,
     ..body,
   )
 }
