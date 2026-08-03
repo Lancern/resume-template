@@ -75,8 +75,8 @@
   )
 
   // Section heading style
-  show heading: it => block[
-    #set text(font: heading-font, size: text-size * 1.25)
+  show heading: it => block(above: 1.2em, below: 0.4em)[
+    #set text(font: heading-font, size: text-size * 1.35)
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
@@ -149,18 +149,18 @@
     emph(st),
   ))
 
-  stack(
-    dir: ttb,
-    spacing: 0.6em,
-    block[
-      #text(weight: "bold", title)
+  block(above: 0.6em, below: 1.2em)[
+    #block(below: 0.75em)[
+      #text(weight: "bold", size: 1.1em, title)
       #h(2em)
       #box(stack(dir: ltr, spacing: 1em, ..subtitle-texts))
       #h(1fr)
       #text(weight: "bold", badge)
-    ],
-    ..body
-  )
+    ]
+    #if body.pos().len() > 0 {
+      body.pos().join()
+    }
+  ]
 }
 
 /// A named subitem listed within a resume item.
