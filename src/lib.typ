@@ -39,6 +39,7 @@
     title: strfmt(vocab-catalog.at(locale).resume-title, name),
     author: name,
     description: strfmt(vocab-catalog.at(locale).resume-description, name),
+    keywords: (vocab-catalog.at(locale).resume-keyword, name),
   )
   set page(
     paper: paper,
