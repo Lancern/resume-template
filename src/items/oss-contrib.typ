@@ -1,6 +1,5 @@
 #import "../lib.typ": item
-
-#let _prog-lang-catalog = yaml("prog-langs.yml")
+#import "../prog-lang.typ": prog-lang-badges
 
 /// A resume item that represents an open source contribution.
 ///
@@ -15,18 +14,5 @@
   role,
   ..body,
 ) = {
-  if type(lang) == str {
-    lang = (lang,)
-  }
-
-  let badge = lang
-    .map(i => (_prog-lang-catalog.at(i, default: none), i))
-    .filter(i => i.first() != none)
-    .map(i => [
-      #box(baseline: 0.2em, circle(height: 1em, fill: rgb(i.first().color)))
-      #i.last()
-    ])
-    .join()
-
-  item(name, badge: badge, subtitles: (role,), ..body)
+  item(name, badge: prog-lang-badges(lang), subtitles: (role,), ..body)
 }
