@@ -152,7 +152,10 @@
     emph(st),
   ))
 
-  block(above: 0.6em, below: 1.2em)[
+  block(
+    above: 0.6em,
+    below: if body.len() > 0 { 1.35em } else { 1em }
+  )[
     #block(below: 0.75em)[
       #box(heading(level: 2, title))
       #h(2em)
