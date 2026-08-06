@@ -13,7 +13,10 @@
     .map(i => (_prog-lang-catalog.at(i, default: none), i))
     .filter(i => i.first() != none)
     .map(i => [
-      #box(baseline: 0.15em, circle(height: 1em, fill: rgb(i.first().color)))
+      #box(
+        baseline: 0.15em,
+        rect(fill: rgb(i.first().color), width: 0.35em, height: 1em),
+      )
       #i.last()
     ])
     .join()
