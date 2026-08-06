@@ -41,7 +41,7 @@ jobs:
         if: steps.tag.outputs.valid == 'true'
         uses: typst-community/setup-typst@v5
         with:
-          typst-version: 0.14.2
+          typst-version: 0.15.1
 
       - name: Build examples
         if: steps.tag.outputs.valid == 'true'

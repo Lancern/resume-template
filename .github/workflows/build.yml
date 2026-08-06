@@ -32,7 +32,7 @@ jobs:
       - name: Install Typst
         uses: typst-community/setup-typst@v5
         with:
-          typst-version: 0.14.2
+          typst-version: 0.15.1
 
       - name: Compile the example
         run: typst compile "${{ matrix.example }}"
