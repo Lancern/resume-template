@@ -76,14 +76,16 @@
   )
 
   // Section heading style
-  show heading: it => block(above: 1.2em, below: 0.4em)[
-    #set text(font: heading-font, size: text-size * 1.35)
+  show heading: set text(font: heading-font)
+  show heading.where(level: 1): it => block(above: 1.2em, below: 0.4em)[
+    #set text(size: text-size * 1.35)
     #stack(
       spacing: 0.3em,
       smallcaps(it.body),
       line(length: 8cm),
     )
   ]
+  show heading.where(level: 2): set text(font: body-font, size: text-size * 1.1)
 
   // An item listed in the personal information area.
   let info-item(icon: none, url: none, body) = {
@@ -152,7 +154,7 @@
 
   block(above: 0.6em, below: 1.2em)[
     #block(below: 0.75em)[
-      #text(weight: "bold", size: 1.1em, title)
+      #box(heading(level: 2, title))
       #h(2em)
       #box(stack(dir: ltr, spacing: 1em, ..subtitle-texts))
       #h(1fr)
