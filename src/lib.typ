@@ -1,6 +1,6 @@
 #import "@preview/oxifmt:1.0.0": strfmt
 
-#import "fonts.typ": catalog as fonts-catalog
+#import "fonts.typ": default-body-font, default-heading-font, default-title-font
 #import "vocab.typ": catalog as vocab-catalog, vocab
 
 /// The resume template.
@@ -52,10 +52,9 @@
   let lang = locale.split("-").at(0)
   let region = locale.split("-").at(1)
 
-  let default-fonts = fonts-catalog.at(locale)
-  let title-font = fonts.at("title", default: default-fonts.title)
-  let body-font = fonts.at("body", default: default-fonts.body)
-  let heading-font = fonts.at("heading", default: default-fonts.heading)
+  let title-font = fonts.at("title", default: default-title-font)
+  let body-font = fonts.at("body", default: default-body-font)
+  let heading-font = fonts.at("heading", default: default-heading-font)
 
   // Body text style
   set text(
