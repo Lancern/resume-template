@@ -84,8 +84,8 @@
   show heading.where(level: 2): set text(font: body-font, size: text-size * 1.1)
 
   // An item listed in the personal information area.
-  let info-item(icon: none, url: none, body) = {
-    set text(size: 1em, fill: rgb(60, 60, 60))
+  let info-item(icon: none, url: none, body) = box({
+    set text(size: 1.1em, fill: rgb(80, 80, 80))
     if icon != none {
       box(height: 1.1em, width: 1.1em, baseline: 0.26em, icon)
       h(0.2em)
@@ -95,7 +95,7 @@
     } else {
       body
     }
-  }
+  })
 
   let webpage-item = none
   let github-item = none
@@ -114,13 +114,27 @@
     box(phone.split(" ").map(raw).join(h(0.25em)))
   }
 
+  let make-phone-link(phone) = {
+    // A canonicalized `tel:` link would only contain digit characters and the
+    // `+` character.
+    return "tel:" + phone.replace(regex("[^\\d\\+]"), "")
+  }
+
   // Personal information at the top.
   title(name)
   stack(
     dir: ltr,
     spacing: 1em,
-    info-item(layout-phone(phone), icon: image("../resources/phone.svg")),
-    info-item(raw(email), icon: image("../resources/email.svg"), url: "mailto:" + email),
+    info-item(
+      layout-phone(phone),
+      icon: image("../resources/phone.svg"),
+      url: make-phone-link(phone),
+    ),
+    info-item(
+      raw(email),
+      icon: image("../resources/email.svg"),
+      url: "mailto:" + email,
+    ),
     webpage-item,
     github-item,
   )
