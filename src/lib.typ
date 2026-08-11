@@ -10,8 +10,6 @@
 /// - email: string, your email address.
 /// - webpage: string or none, URL to your home page. Default to none.
 /// - github-id: string or none, your GitHub ID. Default to none.
-/// - date: datetime, the date when the resume is generated. Default to the
-///   current date.
 /// - locale: string, locale of the resume. Default to `"en-us"`.
 /// - paper: string, paper size of the resume. Default to `"a4"`.
 /// - page-margin: length or dictionary, page margin settings. Default to
@@ -26,7 +24,6 @@
   email,
   webpage: none,
   github-id: none,
-  date: datetime.today(),
   locale: "en-us",
   paper: "a4",
   page-margin: 1.4cm,
@@ -46,9 +43,9 @@
     margin: page-margin,
     footer: context [
       #set text(size: 0.9em, fill: rgb(150, 150, 150))
-      #date.display()
-      #h(1fr)
-      #counter(page).display("1 / 1", both: true)
+      #align(alignment.right)[
+        #counter(page).display("1 / 1", both: true)
+      ]
     ],
   )
 
@@ -154,7 +151,7 @@
 
   block(
     above: 0.6em,
-    below: if body.len() > 0 { 1.35em } else { 1em }
+    below: if body.len() > 0 { 1.35em } else { 1em },
   )[
     #block(below: 0.75em)[
       #box(heading(level: 2, title))
