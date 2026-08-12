@@ -17,6 +17,8 @@
 /// - text-size: length, size of the main text. Default to `11pt`.
 /// - fonts: dictionary, font overrides for the title, body, and headings.
 ///   Default to an empty dictionary.
+/// - display-date: bool, a flag that controls whether the document's date
+///   should be displayed in the footer of the page. Default to false.
 /// - body: content, main content of the resume.
 #let resume(
   name,
@@ -29,6 +31,7 @@
   page-margin: 1.4cm,
   text-size: 11pt,
   fonts: (:),
+  display-date: false,
   body,
 ) = {
   // Set the document's basic properties.
@@ -41,11 +44,19 @@
   set page(
     paper: paper,
     margin: page-margin,
-    footer: context [
-      #set text(size: 0.9em, fill: rgb(150, 150, 150))
-      #align(alignment.right)[
-        #counter(page).display("1 / 1", both: true)
-      ]
+    footer: [
+      #set text(size: 0.8em, fill: rgb(150, 150, 150))
+      #if display-date {
+        context {
+          if document.date == auto {
+            datetime.today().display()
+          } else {
+            document.date.display()
+          }
+        }
+      }
+      #h(1fr)
+      #context { counter(page).display("1 / 1", both: true) }
     ],
   )
 
