@@ -173,7 +173,7 @@
   ..body,
 ) = {
   let subtitle-texts = subtitles.map(st => text(
-    fill: rgb(120, 120, 120),
+    fill: rgb(100, 100, 100),
     emph(st),
   ))
 
@@ -183,7 +183,7 @@
   )[
     #block(below: 0.75em)[
       #box(heading(level: 2, title))
-      #h(2em)
+      #h(3em)
       #box(stack(dir: ltr, spacing: 1em, ..subtitle-texts))
       #h(1fr)
       #text(weight: "bold", badge)
