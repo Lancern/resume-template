@@ -4,14 +4,12 @@
     resume-description: "Resume of {}",
     resume-keyword: "resume",
     tonow: "Now",
-    supervisor: "Supervisor",
   ),
   zh-cn: (
     resume-title: "{}的简历",
     resume-description: "{}的个人简历",
     resume-keyword: "简历",
     tonow: "至今",
-    supervisor: "导师",
   ),
 )
 

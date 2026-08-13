@@ -10,16 +10,19 @@
 /// - email: string, your email address.
 /// - webpage: string or none, URL to your home page. Default to none.
 /// - github-id: string or none, your GitHub ID. Default to none.
-/// - locale: string, locale of the resume. Default to `"en-us"`.
+/// - locale: string, locale of the resume. Supported values are `"en-us"` and
+///   `"zh-cn"`. Default to `"en-us"`.
 /// - paper: string, paper size of the resume. Default to `"a4"`.
 /// - page-margin: length or dictionary, page margin settings. Default to
 ///   `1.4cm`.
 /// - text-size: length, size of the main text. Default to `11pt`.
-/// - fonts: dictionary, font overrides for the title, body, headings, and raw
-///   texts. Default to an empty dictionary.
-/// - display-date: bool, a flag that controls whether the document's date
-///   should be displayed in the footer of the page. Default to false.
-/// - body: content, main content of the resume.
+/// - fonts: dictionary, overrides for the `title`, `heading`, `body`, and `raw`
+///   font roles. Missing roles use the `"adobe-source"` font set. Default to an
+///   empty dictionary.
+/// - display-date: bool, whether to display the document date in the footer.
+///   The footer always displays page numbers. Default to false.
+/// - body: content, main content supplied by the template's show rule.
+/// -> content, the styled contact header followed by the resume body.
 #let resume(
   name,
   phone,
@@ -166,11 +169,13 @@
 /// An item listed on the resume. An item may represent an education experience,
 /// an award, a work experience, a project, or anything else worth listing.
 ///
-/// - title: string, title of the item.
+/// - title: content, title of the item.
 /// - badge: content or none, badge displayed in the top-right corner of the
 ///   item. Default to none.
-/// - subtitles: array, subtitles of the item. Default to an empty array.
-/// - body: content, additional content associated with this item.
+/// - subtitles: array of content, subtitles of the item. Default to an empty
+///   array.
+/// - body: content, zero or more additional content arguments.
+/// -> content, the laid-out resume item.
 #let item(
   title,
   badge: none,
@@ -201,8 +206,9 @@
 
 /// A named subitem listed within a resume item.
 ///
-/// - name: string, name of the sub-item.
+/// - name: content, name of the sub-item.
 /// - body: content, additional content associated with the sub-item.
+/// -> content, a block containing the name and body.
 #let sub-item(name, body) = block[
   #text(weight: "bold", name)
   #h(1.2em)

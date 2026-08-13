@@ -3,11 +3,12 @@
 
 /// A resume item that represents an open source contribution.
 ///
-/// - name: string, name of the open source project.
+/// - name: content, name of the open source project.
 /// - lang: string or array of strings, programming languages used in the
 ///   project.
-/// - role: string, role in the project.
-/// - body: content, additional content associated with the project.
+/// - role: content, role in the project.
+/// - body: content, zero or more additional content arguments.
+/// -> content, the laid-out open source contribution item.
 #let oss-contrib(
   name,
   lang,

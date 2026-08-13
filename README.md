@@ -1,63 +1,82 @@
-# resume
+# Resume Template
 
-This repository contains a simple resume template for developers written in [Typst].
+A compact, single-column resume template for software developers, written in [Typst](https://typst.app/). It provides semantic helpers for common resume entries, English and Simplified Chinese locales, configurable typography, and clickable contact details.
 
-<div style="display:flex;">
-  <img src="resources/example_zh-cn.png" height="300px" style="margin-right:4px;" />
-  <img src="resources/example_en-us.png" height="300px" />
-</div>
+| Simplified Chinese | English |
+| --- | --- |
+| [![Simplified Chinese example](resources/example_zh-cn.png)](example_zh-cn.typ) | [![English example](resources/example_en-us.png)](example_en-us.typ) |
 
-## Usage and Build
+## Requirements
 
-You need to install [Typst] before you start. If you have a Rust installation, you could install Typst via `cargo`:
+The template is tested with Typst 0.15.1. Install Typst before compiling the template and use `typst fonts` to check which fonts Typst can find.
+
+The default `adobe-source` font set uses Source Serif 4, Source Han Serif, Source Sans 3, Source Han Sans, and Source Code Pro. If those families are not installed, install them or select the built-in `noto` font set. See [Fonts](docs/tutorial.md#fonts) for details.
+
+## Quick start
+
+Download and extract the source archive for [v0.3.0](https://github.com/Lancern/resume-template/releases/tag/v0.3.0), or clone the tagged source:
 
 ```bash
-cargo install --locked typst-cli
+git clone --branch v0.3.0 --depth 1 https://github.com/Lancern/resume-template.git
+cd resume-template
 ```
 
-The file `resume.typ` contains the template definition, which defines the resume's layout and provides some useful utility functions to help typeset your resume. You can import this file into your own Typst file to use the template:
+Keep `resume.typ`, `src/`, and `resources/` together. Create `my-resume.typ` in the project directory:
 
 ```typst
-#import "resume.typ": *
+#import "resume.typ": career, edu, resume
 
 #show: resume.with(
-  "Your name",
-  "Your phone number",
-  "Your email",
-  webpage: "https://your.home.page",  // Optional
-  github-id: "YourGithubId",          // Optional
-  lang: "en",
+  "Taylor Hacker",
+  "+1 555 010 1234",
+  "taylor@example.com",
+  webpage: "https://example.com",
+  github-id: "taylor",
+  locale: "en-us",
 )
 
 = Education
-// Your education experiences
+#edu(
+  "Example University",
+  "BSc",
+  "2018.09",
+  end-date: "2022.06",
+  major: "Computer Science",
+)
 
-= Professional Skills
-// Your professional skills
-
-= Work Experiences
-// Your work experiences
-
-// And more
+= Experience
+#career(
+  "Example Corp.",
+  "Software Engineer",
+  "2022.07",
+)[
+  Built reliable systems and improved developer tooling.
+]
 ```
 
-This repository provides two examples that you can refer and modify:
-
-- `example_en-us.typ`: A resume example written in locale `en-us`;
-- `example_zh-cn.typ`: A resume example written in locale `zh-cn`.
-
-To build the example, run:
+Compile it with:
 
 ```bash
-typst compile example_zh-cn.typ
+typst compile my-resume.typ
 ```
 
-## Contribution
+During editing, `typst watch my-resume.typ` recompiles the PDF whenever the source changes.
 
-Any kinds of contributions are welcomed, including bug reports, bug fixes, features requests, feature implementations, documentation improvements, etc. Feel free to open a new issue or PR! If you have any questions on the usage of this template, feel free to open a new issue.
+## Documentation
+
+- [Tutorial](docs/tutorial.md) — build a complete resume and customize its locale, layout, footer, and fonts.
+- [API reference](docs/api-reference.md) — signatures, defaults, behavior, and examples for every public definition.
+- [English example](example_en-us.typ) and [Simplified Chinese example](example_zh-cn.typ) — complete sources that are compiled in CI.
+
+## Contributing
+
+Bug reports, fixes, features, and documentation improvements are more than welcome. Open an [issue](https://github.com/Lancern/resume-template/issues) or submit a pull request. When changing layout or behavior, compile both example documents before submitting the change:
+
+```bash
+typst compile -f png example_en-us.typ resources/example_en-us.png
+typst compile -f png example_zh-cn.typ resources/example_zh-cn.png
+```
 
 ## License
 
-This repository is open-source under the [Creative Commons Zero v1.0 Universal (CC0-1.0)](./LICENSE) license.
-
-[typst]: (https://typst.app/)
+This project is released under the [Creative Commons Zero v1.0 Universal](LICENSE) license.

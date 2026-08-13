@@ -2,11 +2,12 @@
 
 /// A resume item that represents an award received.
 ///
-/// - name: string, name of the competition, activity, or other source of the
+/// - name: content, name of the competition, activity, or other source of the
 ///   award.
-/// - date: string, date when the award was received.
-/// - award: string, name of the award.
-/// - body: content, additional content associated with the award.
+/// - date: content, date when the award was received.
+/// - award: content, name of the award.
+/// - body: content, zero or more additional content arguments.
+/// -> content, the laid-out award item.
 #let award(
   name,
   date,

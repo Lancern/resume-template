@@ -4,6 +4,8 @@
 /// with their GitHub theme color.
 ///
 /// - names: string or array of strings, name(s) of the programming language(s).
+///   Unknown names are omitted.
+/// -> content, the recognized language names and their color badges.
 #let prog-lang-badges(names) = {
   if type(names) == str {
     names = (names,)

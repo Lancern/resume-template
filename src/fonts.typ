@@ -39,7 +39,8 @@
 /// This function would result in an error if the specified builtin font set
 /// does not exist.
 ///
-/// - name string, name of the built-in font set.
-/// -> a dictionary that contains the keys "title", "heading", and "body" which
-///    represents the font set.
+/// - name: string, name of the built-in font set. Supported values are
+///   `"adobe-source"` and `"noto"`.
+/// -> dictionary, a font set containing the keys `title`, `heading`, `body`,
+///   and `raw`.
 #let font-set(name) = font-sets-catalog.at(name)
