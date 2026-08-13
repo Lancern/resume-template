@@ -14,7 +14,8 @@
       (name: "Noto Serif", covers: "latin-in-cjk"),
       (name: "Noto Serif CJK SC"),
       (name: "Noto Serif SC"),
-    )
+    ),
+    raw: "Noto Sans Mono",
   ),
   adobe-source: (
     title: (
@@ -29,6 +30,7 @@
       (name: "Source Serif 4", covers: "latin-in-cjk"),
       (name: "Source Han Serif")
     ),
+    raw: "Source Code Pro",
   )
 )
 

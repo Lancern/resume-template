@@ -15,8 +15,8 @@
 /// - page-margin: length or dictionary, page margin settings. Default to
 ///   `1.4cm`.
 /// - text-size: length, size of the main text. Default to `11pt`.
-/// - fonts: dictionary, font overrides for the title, body, and headings.
-///   Default to an empty dictionary.
+/// - fonts: dictionary, font overrides for the title, body, headings, and raw
+///   texts. Default to an empty dictionary.
 /// - display-date: bool, a flag that controls whether the document's date
 ///   should be displayed in the footer of the page. Default to false.
 /// - body: content, main content of the resume.
@@ -70,6 +70,7 @@
     "heading",
     default: default-font-set.at("heading")
   )
+  let raw-font = fonts.at("raw", default: default-font-set.at("raw"))
 
   // Body text style
   set text(
@@ -98,12 +99,14 @@
   ]
   show heading.where(level: 2): set text(font: body-font, size: text-size * 1.1)
 
+  show raw: set text(font: raw-font)
+
   // An item listed in the personal information area.
   let info-item(icon: none, url: none, body) = box({
     set text(size: 1.1em, fill: rgb(80, 80, 80))
     if icon != none {
-      box(height: 1.1em, width: 1.1em, baseline: 0.26em, icon)
-      h(0.2em)
+      box(height: 1em, width: 1em, baseline: 0.26em, icon)
+      h(0.1em)
     }
     if url != none {
       link(url, body)
@@ -126,7 +129,7 @@
   }
 
   let layout-phone(phone) = {
-    box(phone.split(" ").map(raw).join(h(0.25em)))
+    box(phone.split(" ").map(raw).join(h(0.2em)))
   }
 
   let make-phone-link(phone) = {
@@ -153,6 +156,8 @@
     webpage-item,
     github-item,
   )
+
+  show raw: set text(size: 1.1em)
 
   // Main body.
   body
